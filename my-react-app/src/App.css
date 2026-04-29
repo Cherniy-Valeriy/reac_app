@@ -1,0 +1,306 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f8fafc;
+  background: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(139, 92, 246, 0.32), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.22), transparent 35%),
+    linear-gradient(135deg, #020617, #111827 45%, #1e1b4b);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.App {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+/* Информационный блок */
+
+.info {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 34px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+}
+
+.info::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 35%);
+  pointer-events: none;
+}
+
+.money {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+#USD,
+#EUR {
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.13);
+  color: #f8fafc;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.weather-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.52);
+  color: #e5e7eb;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.weather-icon {
+  width: 64px;
+  height: 64px;
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
+}
+
+/* Заголовок */
+
+header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.list-header {
+  margin: 0;
+  font-size: clamp(40px, 7vw, 62px);
+  line-height: 1;
+  font-weight: 850;
+  letter-spacing: -2px;
+  color: #ffffff;
+}
+
+.list-header::after {
+  content: "";
+  display: block;
+  width: 92px;
+  height: 5px;
+  margin: 18px auto 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #8b5cf6, #38bdf8);
+}
+
+/* Статистика задач */
+
+.task-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 18px auto 0;
+}
+
+.task-stats p {
+  margin: 0;
+  padding: 14px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Форма */
+
+.todo-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 26px;
+  padding: 12px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.todo-form input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  border-radius: 17px;
+  padding: 16px 18px;
+  font-size: 16px;
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.todo-form input:focus {
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.28);
+}
+
+.todo-form input::placeholder {
+  color: #94a3b8;
+}
+
+.todo-form button {
+  border: none;
+  border-radius: 17px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 12px 25px rgba(99, 102, 241, 0.35);
+}
+
+.todo-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(99, 102, 241, 0.45);
+}
+
+.todo-form button:active {
+  transform: translateY(0);
+}
+
+/* Список задач */
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.todo-list p {
+  margin: 12px 0 0;
+  color: #cbd5e1;
+  font-size: 17px;
+  text-align: center;
+}
+
+.item-todo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #0f172a;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+  animation: taskAppear 0.22s ease;
+}
+
+.item-text {
+  flex: 1;
+  text-align: left;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  word-break: break-word;
+}
+
+.item-text::before {
+  content: "○";
+  margin-right: 10px;
+  color: #8b5cf6;
+  font-weight: 900;
+}
+
+.item-text.strike::before {
+  content: "✓";
+  color: #22c55e;
+}
+
+.strike {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.item-delete {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 14px;
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.item-delete:hover {
+  background: #fecaca;
+  transform: rotate(6deg) scale(1.05);
+}
+
+@keyframes taskAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Адаптив */
+
+@media (max-width: 640px) {
+  .App {
+    padding: 28px 14px;
+  }
+
+  .money {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .task-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .todo-form {
+    flex-direction: column;
+  }
+
+  .todo-form button {
+    padding: 15px;
+  }
+}
