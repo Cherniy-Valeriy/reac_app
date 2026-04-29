@@ -17,3 +17,5 @@
 # docker build -t todo-app .
 
 # docker run -p 80:80 todo-app
+
+![alt text](image.png)
