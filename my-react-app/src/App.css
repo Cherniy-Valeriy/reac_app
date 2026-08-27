@@ -1,7 +1,10 @@
 :root {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #f8fafc;
-  background: #0f172a;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #20211f;
+  background: #f2f2ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -10,11 +13,18 @@
 
 body {
   margin: 0;
+  min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top left, rgba(139, 92, 246, 0.32), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.22), transparent 35%),
-    linear-gradient(135deg, #020617, #111827 45%, #1e1b4b);
+  background: #f2f2ef;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 #root {
@@ -22,285 +32,564 @@ body {
 }
 
 .App {
-  width: 100%;
-  max-width: 780px;
+  width: min(1120px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 32px 20px 48px;
+  padding: 54px 0 64px;
 }
 
-/* Информационный блок */
-
-.info {
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 34px;
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 0 2px 28px;
+  border-bottom: 1px solid #d8d8d2;
+  margin-bottom: 24px;
 }
 
-.info::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), transparent 35%);
-  pointer-events: none;
+.eyebrow,
+.panel-kicker {
+  margin: 0 0 8px;
+  color: #81817a;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.money {
-  position: relative;
+.page-header h1 {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(38px, 5.4vw, 68px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 650;
+}
+
+.page-description {
+  max-width: 670px;
+  margin: 18px 0 0;
+  color: #696a65;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.status-chip {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  border: 1px solid #cdcdc6;
+  border-radius: 999px;
+  background: #e8e8e3;
+  color: #4c4d49;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns: 0.92fr 1.08fr;
+  gap: 18px;
   margin-bottom: 18px;
 }
 
-#USD,
-#EUR {
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.13);
-  color: #f8fafc;
-  font-size: 15px;
-  font-weight: 700;
-  text-align: center;
+.panel,
+.tasks-section {
+  border: 1px solid #d8d8d2;
+  border-radius: 18px;
+  background: #fbfbf8;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
 }
 
-.weather-info {
-  position: relative;
+.panel {
+  padding: 24px;
+}
+
+.panel-heading,
+.nasa-card-header,
+.tasks-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
-  padding: 18px;
-  border-radius: 22px;
-  background: rgba(15, 23, 42, 0.52);
-  color: #e5e7eb;
-  font-size: 17px;
-  line-height: 1.5;
+  gap: 20px;
 }
 
-.weather-icon {
-  width: 64px;
-  height: 64px;
-  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.35));
+.panel-heading {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e4e4df;
 }
 
-/* Заголовок */
-
-header {
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.list-header {
+.panel h2,
+.tasks-header h2 {
   margin: 0;
-  font-size: clamp(40px, 7vw, 62px);
+  color: #20211f;
+  font-size: 23px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 650;
+}
+
+.panel-index {
+  color: #aaa9a2;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.currency-list {
+  padding-top: 7px;
+}
+
+.currency-row {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 66px;
+  border-bottom: 1px solid #e7e7e2;
+}
+
+.currency-row:last-child {
+  border-bottom: 0;
+}
+
+.currency-code {
+  display: inline-flex;
+  width: 44px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #ecece7;
+  color: #333431;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.currency-name {
+  color: #75766f;
+  font-size: 13px;
+}
+
+.currency-row strong {
+  color: #252623;
+  font-size: 18px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.weather-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 20px;
+  padding-top: 22px;
+}
+
+.weather-temperature {
+  color: #1f201e;
+  font-size: clamp(50px, 7vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  font-weight: 600;
+}
+
+.weather-description {
+  margin: 12px 0 0;
+  color: #333430;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.weather-feels {
+  margin: 4px 0 0;
+  color: #85857e;
+  font-size: 12px;
+}
+
+.weather-emoji {
+  align-self: center;
+  font-size: 52px;
   line-height: 1;
-  font-weight: 850;
-  letter-spacing: -2px;
-  color: #ffffff;
+  filter: grayscale(0.2) saturate(0.8);
 }
 
-.list-header::after {
-  content: "";
-  display: block;
-  width: 92px;
-  height: 5px;
-  margin: 18px auto 14px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #8b5cf6, #38bdf8);
-}
-
-/* Статистика задач */
-
-.task-stats {
+.weather-metrics {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 18px auto 0;
+  margin-top: 14px;
+  border-top: 1px solid #e4e4df;
 }
 
-.task-stats p {
-  margin: 0;
-  padding: 14px 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #e5e7eb;
-  font-size: 15px;
+.weather-metrics div {
+  padding: 16px 14px 0 0;
+}
+
+.weather-metrics span,
+.weather-metrics strong {
+  display: block;
+}
+
+.weather-metrics span {
+  margin-bottom: 4px;
+  color: #92928b;
+  font-size: 11px;
+}
+
+.weather-metrics strong {
+  color: #3d3e3a;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.nasa-card {
+  margin-bottom: 18px;
+}
+
+.nasa-card-header {
+  align-items: flex-end;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e4e4df;
+}
+
+.nasa-date-form {
+  display: flex;
+  gap: 8px;
+}
+
+.nasa-date-form input,
+.nasa-date-form button,
+.todo-form input,
+.todo-form button {
+  min-height: 42px;
+  border-radius: 9px;
+}
+
+.nasa-date-form input,
+.todo-form input {
+  border: 1px solid #d2d2cc;
+  outline: none;
+  background: #ffffff;
+  color: #242522;
+}
+
+.nasa-date-form input {
+  padding: 0 12px;
+}
+
+.nasa-date-form input:focus,
+.todo-form input:focus {
+  border-color: #8a8a83;
+  box-shadow: 0 0 0 3px rgba(40, 40, 37, 0.07);
+}
+
+.nasa-date-form button,
+.todo-form button {
+  border: 1px solid #242522;
+  background: #242522;
+  color: #fafaf7;
   font-weight: 700;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition: background 0.16s ease, transform 0.16s ease;
 }
 
-/* Форма */
+.nasa-date-form button {
+  padding: 0 16px;
+}
+
+.nasa-date-form button:hover,
+.todo-form button:hover {
+  background: #3a3b37;
+}
+
+.nasa-date-form button:active,
+.todo-form button:active {
+  transform: translateY(1px);
+}
+
+.nasa-content {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.15fr);
+  gap: 28px;
+  padding-top: 24px;
+  align-items: start;
+}
+
+.nasa-media-link {
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #1d1e1c;
+}
+
+.nasa-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.nasa-date {
+  margin: 2px 0 9px;
+  color: #92928b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.nasa-text h3 {
+  margin: 0 0 13px;
+  color: #242522;
+  font-size: clamp(23px, 3vw, 32px);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
+
+.nasa-explanation {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: #6f706a;
+  font-size: 14px;
+  line-height: 1.65;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
+}
+
+.nasa-video-link {
+  display: flex;
+  min-height: 260px;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #b9b9b2;
+  border-radius: 12px;
+  background: #f2f2ee;
+  color: #2d2e2b;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.panel-status {
+  margin: 20px 0 0;
+  color: #777870;
+  font-size: 14px;
+}
+
+.api-error {
+  margin: 18px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #d9bdbc;
+  border-radius: 9px;
+  background: #faf0ef;
+  color: #7b3532;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.tasks-section {
+  padding: 24px;
+}
+
+.tasks-header {
+  align-items: flex-end;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e4e4df;
+}
+
+.task-stats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.task-stats span {
+  padding: 7px 9px;
+  border: 1px solid #ddddD7;
+  border-radius: 8px;
+  background: #f4f4f0;
+  color: #777870;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.task-stats strong {
+  color: #272825;
+  font-weight: 800;
+}
 
 .todo-form {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 26px;
-  padding: 12px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 9px;
+  margin: 20px 0;
 }
 
 .todo-form input {
-  flex: 1;
   min-width: 0;
-  border: none;
-  outline: none;
-  border-radius: 17px;
-  padding: 16px 18px;
-  font-size: 16px;
-  color: #0f172a;
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.todo-form input:focus {
-  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.28);
+  padding: 0 14px;
 }
 
 .todo-form input::placeholder {
-  color: #94a3b8;
+  color: #a0a099;
 }
 
 .todo-form button {
-  border: none;
-  border-radius: 17px;
-  padding: 0 24px;
-  font-size: 15px;
-  font-weight: 800;
-  color: #ffffff;
-  background: linear-gradient(135deg, #8b5cf6, #6366f1);
-  cursor: pointer;
-  transition: 0.2s ease;
-  box-shadow: 0 12px 25px rgba(99, 102, 241, 0.35);
+  padding: 0 21px;
 }
-
-.todo-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(99, 102, 241, 0.45);
-}
-
-.todo-form button:active {
-  transform: translateY(0);
-}
-
-/* Список задач */
 
 .todo-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-}
-
-.todo-list p {
-  margin: 12px 0 0;
-  color: #cbd5e1;
-  font-size: 17px;
-  text-align: center;
+  gap: 8px;
 }
 
 .item-todo {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.94);
-  color: #0f172a;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
-  animation: taskAppear 0.22s ease;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 8px 8px 13px;
+  border: 1px solid #e2e2dc;
+  border-radius: 10px;
+  background: #ffffff;
+  animation: taskAppear 0.18s ease;
 }
 
 .item-text {
   flex: 1;
+  min-width: 0;
+  color: #343531;
+  font-size: 14px;
   text-align: left;
-  font-size: 17px;
-  font-weight: 600;
   cursor: pointer;
   word-break: break-word;
 }
 
 .item-text::before {
-  content: "○";
-  margin-right: 10px;
-  color: #8b5cf6;
-  font-weight: 900;
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 11px;
+  border: 1.5px solid #94948c;
+  border-radius: 50%;
+  vertical-align: -2px;
 }
 
 .item-text.strike::before {
-  content: "✓";
-  color: #22c55e;
+  background: #40413d;
+  border-color: #40413d;
+  box-shadow: inset 0 0 0 3px #ffffff;
 }
 
 .strike {
-  color: #94a3b8;
+  color: #9a9a93;
   text-decoration: line-through;
 }
 
 .item-delete {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 38px;
-  border-radius: 14px;
-  background: #fee2e2;
-  color: #dc2626;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
+  border-radius: 8px;
+  color: #8c8c84;
+  font-size: 12px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .item-delete:hover {
-  background: #fecaca;
-  transform: rotate(6deg) scale(1.05);
+  background: #eeeeea;
+  color: #272825;
+}
+
+.empty-state {
+  margin: 4px 0 0;
+  padding: 24px;
+  border: 1px dashed #d5d5cf;
+  border-radius: 10px;
+  color: #8c8d86;
+  font-size: 13px;
+  text-align: center;
 }
 
 @keyframes taskAppear {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Адаптив */
-
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .App {
-    padding: 28px 14px;
+    width: min(100% - 24px, 1120px);
+    padding: 28px 0 36px;
   }
 
-  .money {
+  .page-header,
+  .nasa-card-header,
+  .tasks-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-grid,
+  .nasa-content {
     grid-template-columns: 1fr;
   }
 
-  .weather-info {
-    flex-direction: column;
-    text-align: center;
+  .status-chip {
+    display: none;
+  }
+
+  .nasa-date-form {
+    width: 100%;
+  }
+
+  .nasa-date-form input {
+    flex: 1;
+    min-width: 0;
   }
 
   .task-stats {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .panel,
+  .tasks-section {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .weather-metrics {
     grid-template-columns: 1fr;
   }
 
+  .weather-metrics div {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid #ecece7;
+  }
+
   .todo-form {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .todo-form button {
-    padding: 15px;
+    min-height: 44px;
+  }
+
+  .currency-row {
+    grid-template-columns: 50px 1fr;
+  }
+
+  .currency-row strong {
+    grid-column: 2;
   }
 }
