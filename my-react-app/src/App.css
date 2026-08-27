@@ -106,7 +106,7 @@ button {
 }
 
 .panel-heading,
-.nasa-card-header,
+.iss-card-header,
 .tasks-header {
   display: flex;
   align-items: flex-start;
@@ -243,131 +243,131 @@ button {
   font-weight: 650;
 }
 
-.nasa-card {
+ .iss-card {
   margin-bottom: 18px;
 }
 
-.nasa-card-header {
+.iss-card-header {
   align-items: flex-end;
   padding-bottom: 22px;
   border-bottom: 1px solid #e4e4df;
 }
 
-.nasa-date-form {
-  display: flex;
-  gap: 8px;
-}
-
-.nasa-date-form input,
-.nasa-date-form button,
-.todo-form input,
-.todo-form button {
+.iss-refresh-button {
   min-height: 42px;
-  border-radius: 9px;
-}
-
-.nasa-date-form input,
-.todo-form input {
-  border: 1px solid #d2d2cc;
-  outline: none;
-  background: #ffffff;
-  color: #242522;
-}
-
-.nasa-date-form input {
-  padding: 0 12px;
-}
-
-.nasa-date-form input:focus,
-.todo-form input:focus {
-  border-color: #8a8a83;
-  box-shadow: 0 0 0 3px rgba(40, 40, 37, 0.07);
-}
-
-.nasa-date-form button,
-.todo-form button {
+  padding: 0 16px;
   border: 1px solid #242522;
+  border-radius: 9px;
   background: #242522;
   color: #fafaf7;
+  font: inherit;
   font-weight: 700;
-  transition: background 0.16s ease, transform 0.16s ease;
+  cursor: pointer;
+  transition: background 0.16s ease, transform 0.16s ease, opacity 0.16s ease;
 }
 
-.nasa-date-form button {
-  padding: 0 16px;
-}
-
-.nasa-date-form button:hover,
-.todo-form button:hover {
+.iss-refresh-button:hover:not(:disabled) {
   background: #3a3b37;
 }
 
-.nasa-date-form button:active,
-.todo-form button:active {
+.iss-refresh-button:active:not(:disabled) {
   transform: translateY(1px);
 }
 
-.nasa-content {
+.iss-refresh-button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.iss-content {
   display: grid;
-  grid-template-columns: minmax(260px, 0.95fr) minmax(0, 1.15fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
   gap: 28px;
   padding-top: 24px;
-  align-items: start;
 }
 
-.nasa-media-link {
+.iss-primary {
+  padding: 22px;
+  border: 1px solid #e0e0da;
+  border-radius: 14px;
+  background: #f5f5f1;
+}
+
+.iss-label {
+  margin: 0 0 18px;
+  color: #8a8a83;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.iss-coordinates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.iss-coordinates div {
+  min-width: 0;
+}
+
+.iss-coordinates span,
+.iss-coordinates strong {
   display: block;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #1d1e1c;
 }
 
-.nasa-image {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.nasa-date {
-  margin: 2px 0 9px;
+.iss-coordinates span {
+  margin-bottom: 6px;
   color: #92928b;
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
 }
 
-.nasa-text h3 {
-  margin: 0 0 13px;
-  color: #242522;
-  font-size: clamp(23px, 3vw, 32px);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
+.iss-coordinates strong {
+  color: #252623;
+  font-size: clamp(25px, 4vw, 38px);
+  line-height: 1;
+  letter-spacing: -0.04em;
   font-weight: 650;
+  font-variant-numeric: tabular-nums;
 }
 
-.nasa-explanation {
-  display: -webkit-box;
-  overflow: hidden;
-  margin: 0;
-  color: #6f706a;
-  font-size: 14px;
-  line-height: 1.65;
-  -webkit-line-clamp: 9;
-  -webkit-box-orient: vertical;
+.iss-updated {
+  margin: 20px 0 0;
+  color: #85857e;
+  font-size: 12px;
 }
 
-.nasa-video-link {
-  display: flex;
-  min-height: 260px;
-  align-items: center;
-  justify-content: center;
-  border: 1px dashed #b9b9b2;
+.iss-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.iss-metrics div {
+  min-height: 92px;
+  padding: 17px;
+  border: 1px solid #e2e2dc;
   border-radius: 12px;
-  background: #f2f2ee;
-  color: #2d2e2b;
-  font-weight: 700;
-  text-decoration: none;
+  background: #ffffff;
+}
+
+.iss-metrics span,
+.iss-metrics strong {
+  display: block;
+}
+
+.iss-metrics span {
+  margin-bottom: 9px;
+  color: #92928b;
+  font-size: 11px;
+}
+
+.iss-metrics strong {
+  color: #343531;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 650;
 }
 
 .panel-status {
@@ -530,14 +530,14 @@ button {
   }
 
   .page-header,
-  .nasa-card-header,
+  .iss-card-header,
   .tasks-header {
     align-items: flex-start;
     flex-direction: column;
   }
 
   .dashboard-grid,
-  .nasa-content {
+  .iss-content {
     grid-template-columns: 1fr;
   }
 
@@ -545,17 +545,13 @@ button {
     display: none;
   }
 
-  .nasa-date-form {
-    width: 100%;
-  }
-
-  .nasa-date-form input {
-    flex: 1;
-    min-width: 0;
-  }
 
   .task-stats {
     justify-content: flex-start;
+  }
+
+  .iss-refresh-button {
+    width: 100%;
   }
 }
 
@@ -575,6 +571,11 @@ button {
     justify-content: space-between;
     padding: 11px 0;
     border-bottom: 1px solid #ecece7;
+  }
+
+  .iss-coordinates,
+  .iss-metrics {
+    grid-template-columns: 1fr;
   }
 
   .todo-form {

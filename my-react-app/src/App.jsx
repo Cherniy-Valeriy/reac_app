@@ -5,8 +5,6 @@ import ToDo from './Task';
 import axios from 'axios';
 
 const TASKS_STORAGE_KEY = 'tasks-list-project-web';
-const NASA_API_KEY = import.meta.env.VITE_NASA_API_KEY;
-
 const KRASNODAR = {
   latitude: 45.0355,
   longitude: 38.9753,
@@ -55,16 +53,15 @@ function App() {
 
   const [rates, setRates] = useState({});
   const [weatherData, setWeatherData] = useState(null);
-  const [nasaData, setNasaData] = useState(null);
-  const [nasaDate, setNasaDate] = useState('');
+  const [issData, setIssData] = useState(null);
 
   const [currencyError, setCurrencyError] = useState('');
   const [weatherError, setWeatherError] = useState('');
-  const [nasaError, setNasaError] = useState('');
+  const [issError, setIssError] = useState('');
 
   const [currencyLoading, setCurrencyLoading] = useState(true);
   const [weatherLoading, setWeatherLoading] = useState(true);
-  const [nasaLoading, setNasaLoading] = useState(true);
+  const [issLoading, setIssLoading] = useState(true);
 
   useEffect(() => {
     localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(todos));
@@ -129,55 +126,32 @@ function App() {
     fetchWeather();
   }, []);
 
-  const fetchNasaApod = useCallback(async (date = '') => {
-    if (!NASA_API_KEY) {
-      setNasaError(
-        'NASA API key не настроен. Добавьте VITE_NASA_API_KEY в файл .env.'
-      );
-      setNasaLoading(false);
-      return;
-    }
-
-    setNasaLoading(true);
-    setNasaError('');
+  const fetchIssPosition = useCallback(async () => {
+    setIssLoading(true);
+    setIssError('');
 
     try {
-      const params = {
-        api_key: NASA_API_KEY,
-        thumbs: true,
-      };
-
-      if (date) {
-        params.date = date;
-      }
-
-      const nasaResponse = await axios.get(
-        'https://api.nasa.gov/planetary/apod',
-        { params }
+      const issResponse = await axios.get(
+        'https://api.wheretheiss.at/v1/satellites/25544'
       );
 
-      setNasaData(nasaResponse.data);
+      setIssData(issResponse.data);
     } catch (err) {
       console.error(err);
-      setNasaData(null);
-      setNasaError(
+      setIssData(null);
+      setIssError(
         err.response?.status === 429
-          ? 'Превышен лимит запросов NASA API.'
-          : 'Не удалось загрузить данные NASA APOD.'
+          ? 'Слишком много запросов к ISS API. Попробуйте немного позже.'
+          : 'Не удалось получить текущее положение МКС.'
       );
     } finally {
-      setNasaLoading(false);
+      setIssLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchNasaApod();
-  }, [fetchNasaApod]);
-
-  const handleNasaDateSubmit = (event) => {
-    event.preventDefault();
-    fetchNasaApod(nasaDate);
-  };
+    fetchIssPosition();
+  }, [fetchIssPosition]);
 
   const addTask = (userInput) => {
     if (userInput.trim()) {
@@ -218,7 +192,7 @@ function App() {
           <p className="eyebrow">WEB APPLICATION · REST API</p>
           <h1>Информационная панель</h1>
           <p className="page-description">
-            Курсы валют, текущая погода, NASA APOD и список задач в одном приложении.
+            Курсы валют, текущая погода, положение МКС и список задач в одном приложении.
           </p>
         </div>
         <div className="status-chip">3 API подключено</div>
@@ -289,60 +263,63 @@ function App() {
         </article>
       </section>
 
-      <section className="panel nasa-card">
-        <div className="nasa-card-header">
+      <section className="panel iss-card">
+        <div className="iss-card-header">
           <div>
-            <p className="panel-kicker">NASA OPEN API · APOD</p>
-            <h2>Astronomy Picture of the Day</h2>
+            <p className="panel-kicker">WHERE THE ISS AT? · REST API</p>
+            <h2>Международная космическая станция</h2>
           </div>
 
-          <form className="nasa-date-form" onSubmit={handleNasaDateSubmit}>
-            <input
-              type="date"
-              value={nasaDate}
-              min="1995-06-16"
-              max={new Date().toISOString().split('T')[0]}
-              onChange={(event) => setNasaDate(event.target.value)}
-              aria-label="Дата изображения NASA"
-            />
-            <button type="submit">Показать</button>
-          </form>
+          <button
+            className="iss-refresh-button"
+            type="button"
+            onClick={fetchIssPosition}
+            disabled={issLoading}
+          >
+            {issLoading ? 'Обновление...' : 'Обновить положение'}
+          </button>
         </div>
 
-        {nasaLoading ? (
-          <p className="panel-status">Загрузка данных NASA...</p>
-        ) : nasaError ? (
-          <p className="api-error">{nasaError}</p>
-        ) : nasaData ? (
-          <div className="nasa-content">
-            {nasaData.media_type === 'image' ? (
-              <a
-                className="nasa-media-link"
-                href={nasaData.hdurl || nasaData.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img className="nasa-image" src={nasaData.url} alt={nasaData.title} />
-              </a>
-            ) : nasaData.thumbnail_url ? (
-              <a
-                className="nasa-media-link"
-                href={nasaData.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img className="nasa-image" src={nasaData.thumbnail_url} alt={nasaData.title} />
-              </a>
-            ) : (
-              <a className="nasa-video-link" href={nasaData.url} target="_blank" rel="noreferrer">
-                Открыть видео NASA
-              </a>
-            )}
+        {issLoading && !issData ? (
+          <p className="panel-status">Получаем текущее положение МКС...</p>
+        ) : issError ? (
+          <p className="api-error">{issError}</p>
+        ) : issData ? (
+          <div className="iss-content">
+            <div className="iss-primary">
+              <p className="iss-label">Текущие координаты</p>
+              <div className="iss-coordinates">
+                <div>
+                  <span>Широта</span>
+                  <strong>{issData.latitude.toFixed(4)}°</strong>
+                </div>
+                <div>
+                  <span>Долгота</span>
+                  <strong>{issData.longitude.toFixed(4)}°</strong>
+                </div>
+              </div>
+              <p className="iss-updated">
+                Обновлено: {new Date(issData.timestamp * 1000).toLocaleString('ru-RU')}
+              </p>
+            </div>
 
-            <div className="nasa-text">
-              <p className="nasa-date">{nasaData.date}</p>
-              <h3>{nasaData.title}</h3>
-              <p className="nasa-explanation">{nasaData.explanation}</p>
+            <div className="iss-metrics">
+              <div>
+                <span>Высота</span>
+                <strong>{issData.altitude.toFixed(1)} км</strong>
+              </div>
+              <div>
+                <span>Скорость</span>
+                <strong>{Math.round(issData.velocity).toLocaleString('ru-RU')} км/ч</strong>
+              </div>
+              <div>
+                <span>Видимость</span>
+                <strong>{issData.visibility === 'daylight' ? 'Дневная сторона' : issData.visibility === 'eclipsed' ? 'В тени Земли' : issData.visibility}</strong>
+              </div>
+              <div>
+                <span>Зона обзора</span>
+                <strong>{Math.round(issData.footprint).toLocaleString('ru-RU')} км</strong>
+              </div>
             </div>
           </div>
         ) : null}
