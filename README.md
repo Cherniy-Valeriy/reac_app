@@ -1,21 +1,45 @@
-# Небольшое веб-приложение на React (Vite) для управления задачами.
+# React API Dashboard
 
-Функционал
-добавление и удаление задач
-отметка выполнения
-отображение количества: всего / активные / выполненные
-сохранение в localStorage
-отображение курса валют (USD, EUR)
-отображение погоды (Краснодар)
-Технологии
+Учебное веб-приложение на React с менеджером задач и интеграцией нескольких внешних API.
 
-# React, Vite, JavaScript, CSS, Axios, Docker
+## Возможности
 
-# Docker
-Сборка:
+* добавление, удаление и выполнение задач;
+* сохранение задач в `localStorage`;
+* отображение курса валют;
+* отображение текущей погоды;
+* получение актуального положения МКС.
 
-# docker build -t todo-app .
+## Технологии
 
-# docker run -p 80:80 todo-app
+* React
+* Vite
+* JavaScript
+* Axios
+* CSS
+* Docker
+* GitHub Pages
 
-![alt text](image.png)
+## API
+
+**Курсы валют:**
+https://www.cbr-xml-daily.ru/
+
+**Погода — Open-Meteo:**
+https://open-meteo.com/en/docs
+
+**Положение МКС — Where The ISS At?:**
+https://wheretheiss.at/w/developer
+
+## Запуск
+
+```bash
+npm install
+npm run dev
+```
+
+Сборка проекта:
+
+```bash
+npm run build
+```
